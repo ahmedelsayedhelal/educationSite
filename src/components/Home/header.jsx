@@ -1,16 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { getcarttotalquantity } from "../../store/Cart/Cart.js";
+import { useCurrentUser } from "../../hooks/Usenav.js";
+import axios from "axios";
 
 const Header = () => {
+  const totalQuantity = useSelector(getcarttotalquantity); 
+  const { data: user, refetch } = useCurrentUser();
+
+  const handleLogout = async () => {
+    try {
+      // 1. إعمل call لـ API اللوج اوت
+      await axios.post("/api/Account/logout", {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    } catch  {
+      console.log("⚠️ مشكلة في الـ API لكن هكمل اللوج اوت");
+    } finally {
+      // 2. امسح التوكن من الـ localStorage
+      localStorage.removeItem("token");
+      
+      // 3. إعمل refetch للـ user data علشان الـ UI يتبدل
+      refetch();
+      
+      // 4. إعمل redirect لصفحة اللوجين
+      window.location.href = "/login";
+    }
+  };
+
   return (
-    <div>
-        <header className="w-full bg-white shadow-sm">
+    <header className="w-full bg-white shadow-sm">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        
         {/* Logo */}
         <div className="flex items-center gap-2">
-        
           <span className="font-bold text-xl text-gray-800">Byway</span>
         </div>
 
@@ -25,21 +51,57 @@ const Header = () => {
 
         {/* Nav Links */}
         <nav className="hidden md:flex items-center gap-6 text-gray-700">
-          <Link to="/Courses" className="hover:text-blue-600">Courses</Link>
-         
+          <Link to="/Courses" className="hover:text-blue-600">
+            Courses
+          </Link>
         </nav>
 
-        {/* Auth Buttons */}
-        <div className="flex items-center gap-4">
-          <button className="text-gray-700 hover:text-blue-600">Log In</button>
-          <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Sign Up
-          </button>
-        </div>
+        {user ? (
+          <div className="flex items-center gap-6">
+            {/* Cart */}
+            <Link
+              to="/Shoppinglist"
+              className="relative flex items-center gap-1 text-gray-700 hover:text-blue-600"
+            >
+              <FaShoppingCart size={20} />
+              {totalQuantity > 0 && (
+                <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {totalQuantity}
+                </span>
+              )}
+              <span>Cart</span>
+            </Link>
+
+            {/* User Info */}
+            <div className="flex items-center gap-2">
+              <span className="text-gray-700">Welcome, {user.username || user.email}</span>
+            </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Link to="/Login">
+              <button className="text-gray-700 hover:text-blue-600">
+                Log In
+              </button>
+            </Link>
+            <Link to="/Register">
+              <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </header>
-    </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
