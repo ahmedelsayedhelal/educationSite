@@ -17,9 +17,11 @@ const schema = z
     email: z.string().email("Enter a valid email"),
     password: z
       .string()
-      .min(8, "Min 8 characters")
-      .regex(/[A-Z]/, "Include an uppercase letter")
-      .regex(/[0-9]/, "Include a number"),
+      .min(8, "Minimum 8 characters")
+      .regex(/[A-Z]/, "Must include at least one uppercase letter")
+      .regex(/[a-z]/, "Must include at least one lowercase letter")
+      .regex(/[0-9]/, "Must include at least one number")
+      .regex(/[^A-Za-z0-9]/, "Must include at least one special character"),
     confirmPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((d) => d.password === d.confirmPassword, {
@@ -34,19 +36,21 @@ export default function SignupForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm({ resolver: zodResolver(schema) });
+    watch,
+  } = useForm({ resolver: zodResolver(schema), mode: "onChange" });
 
   const { mutate, isPending, isSuccess, isError, error } = useRegister();
 
+  const passwordValue = watch("password") || "";
+
   const onSubmit = (values) => {
     const userData = {
-         Firstname: values.firstname,
-    Lastname: values.lastname,
-    username: values.username,
-    Email: values.email,
-    Password: values.password,
-    Confirmpassword: values.confirmPassword,
-      password: values.password,
+      Firstname: values.firstname,
+      Lastname: values.lastname,
+      username: values.username,
+      Email: values.email,
+      Password: values.password,
+      Confirmpassword: values.confirmPassword,
     };
 
     mutate(userData, {
@@ -138,6 +142,7 @@ export default function SignupForm() {
 
       {/* Password + Confirm */}
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Password */}
         <div className="flex flex-col">
           <label htmlFor="password" className="mb-1 text-sm font-medium text-slate-700">
             Password
@@ -149,11 +154,56 @@ export default function SignupForm() {
             {...register("password")}
             className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm shadow-sm focus:border-slate-500 focus:ring focus:ring-slate-200"
           />
+
+          {/* Password rules feedback */}
+          {passwordValue && (
+            <ul className="mt-2 text-xs space-y-1">
+              <li
+                className={`${
+                  passwordValue.length >= 8 ? "text-green-600" : "text-gray-500"
+                }`}
+              >
+                • At least 8 characters
+              </li>
+              <li
+                className={`${
+                  /[A-Z]/.test(passwordValue) ? "text-green-600" : "text-gray-500"
+                }`}
+              >
+                • One uppercase letter
+              </li>
+              <li
+                className={`${
+                  /[a-z]/.test(passwordValue) ? "text-green-600" : "text-gray-500"
+                }`}
+              >
+                • One lowercase letter
+              </li>
+              <li
+                className={`${
+                  /[0-9]/.test(passwordValue) ? "text-green-600" : "text-gray-500"
+                }`}
+              >
+                • One number
+              </li>
+              <li
+                className={`${
+                  /[^A-Za-z0-9]/.test(passwordValue)
+                    ? "text-green-600"
+                    : "text-gray-500"
+                }`}
+              >
+                • One special character
+              </li>
+            </ul>
+          )}
+
           {errors.password && (
             <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
 
+        {/* Confirm Password */}
         <div className="flex flex-col">
           <label htmlFor="confirmPassword" className="mb-1 text-sm font-medium text-slate-700">
             Confirm Password
