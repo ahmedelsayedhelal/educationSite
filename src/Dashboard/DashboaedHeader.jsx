@@ -7,11 +7,11 @@ const DashboaedHeader = () => {
     <>
         <header className="w-full bg-white shadow-sm">
        <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        
-        {/* Logo */}
+        <Link to="/">
         <div className="flex items-center gap-2">
           <span className="font-bold text-xl text-gray-800">Byway</span>
         </div>
+        </Link>
 
         {/* Search */}
         <div className="flex-1 max-w-lg mx-6">
