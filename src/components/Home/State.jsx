@@ -27,14 +27,16 @@ function StatCard({ number, label }) {
   });
 
   return (
+    <div className="bg-white ">
     <div
       ref={ref}
-      className="p-6 bg-white rounded-lg shadow hover:shadow-lg h-45  justify-content-center"
+      className="p-6 bg-white rounded-lg shadow hover:shadow-lg h-40  justify-content-center"
     >
       <h2 className="text-3xl font-bold text-blue-600">
         {inView ? <CountUp start={0} end={number} duration={1.5} /> : 0}+
       </h2>
       <p className="mt-2 text-gray-700">{label}</p>
+    </div>
     </div>
   );
 }

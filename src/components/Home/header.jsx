@@ -24,7 +24,7 @@ const Header = () => {
       
       refetch();
       
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   };
 

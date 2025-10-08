@@ -6,25 +6,25 @@ import CoursesPage from "./DashboardCourses/Couses";
 import axios from "axios";
 
 export default function DashboardLayout() {
-  
+
   const handleLogout = async () => {
-  try {
-    await axios.post(
-      "https://educationtraining.runasp.net/api/Account/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-  } catch {
-    console.log("مشكلة في الـ API لكن هكمل اللوج آوت");
-  } finally {
-    localStorage.removeItem("token");
-    window.location.href = "/login"; 
-  }
-};
+    try {
+      await axios.post(
+        "https://educationtraining.runasp.net/api/Account/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    } catch {
+      console.log("مشكلة في الـ API لكن هكمل اللوج آوت");
+    } finally {
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">

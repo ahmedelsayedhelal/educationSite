@@ -137,6 +137,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
+               <Link to ="/courses">
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
@@ -147,6 +148,8 @@ const Home = () => {
               >
                 Start Learning Today
               </motion.button>
+              </Link>
+              
               <Link to ="/courses">
               <motion.button
                 whileHover={{ scale: 1.05 }}

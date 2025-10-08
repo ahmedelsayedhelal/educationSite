@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/Cart/Cart.js";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -14,17 +14,18 @@ import {
   FaMicrosoft,
 } from "react-icons/fa";
 import InstructorImg from "../images/instructor.png";
-import PlayIcon from "../icons/play.svg";
-import ReviewIcon from "../icons/review.svg";
-import StudentIcon from "../icons/student.svg";
 
 const fetchCourseById = async (id) => {
-  const { data } = await axios.get(`https://educationtraining.runasp.net/api/Courses/${id}`);
+  const { data } = await axios.get(
+    `https://educationtraining.runasp.net/api/Courses/${id}`
+  );
   return data;
 };
 
 const fetchAllCourses = async () => {
-  const { data } = await axios.get("https://educationtraining.runasp.net/api/Courses");
+  const { data } = await axios.get(
+    "https://educationtraining.runasp.net/api/Courses"
+  );
   return data;
 };
 
@@ -32,13 +33,11 @@ const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("description");
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const addedCourses = JSON.parse(localStorage.getItem("addedCourses")) || [];
-    if (addedCourses.includes(id)) setIsAddedToCart(true);
-  }, [id]);
+  // 🛒 احنا بنجيب cartItems من Redux
+  const cartItems = useSelector((state) => state.cart.items);
+  const isAddedToCart = !!cartItems[id];
 
   const isUserLoggedIn = () => !!localStorage.getItem("token");
 
@@ -49,13 +48,8 @@ const CourseDetails = () => {
       return;
     }
 
-    const addedCourses = JSON.parse(localStorage.getItem("addedCourses")) || [];
-
-    if (!addedCourses.includes(id)) {
+    if (!cartItems[id]) {
       dispatch(addToCart(id));
-      addedCourses.push(id);
-      localStorage.setItem("addedCourses", JSON.stringify(addedCourses));
-      setIsAddedToCart(true);
       toast.success("✅ Course added to cart!");
     } else {
       toast("This course is already in your cart 🛒");
@@ -71,7 +65,12 @@ const CourseDetails = () => {
     navigate("/Shoppinglist");
   };
 
-  const { data, isLoading, isError, error } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["course", id],
     queryFn: () => fetchCourseById(id),
     enabled: !!id,
@@ -143,7 +142,9 @@ const CourseDetails = () => {
           <div className="text-gray-700 space-y-4">
             {activeTab === "description" && (
               <>
-                <h2 className="text-xl font-semibold mb-2">Course Description</h2>
+                <h2 className="text-xl font-semibold mb-2">
+                  Course Description
+                </h2>
                 <p>{data.description}</p>
               </>
             )}
@@ -158,7 +159,9 @@ const CourseDetails = () => {
                     className="w-20 h-20 rounded-full object-cover"
                   />
                   <div>
-                    <p className="text-lg font-semibold">{data.instructorName}</p>
+                    <p className="text-lg font-semibold">
+                      {data.instructorName}
+                    </p>
                     <p className="text-gray-500">UX/UI Instructor</p>
                   </div>
                 </div>
@@ -238,14 +241,20 @@ const CourseDetails = () => {
                   className="w-full h-32 object-cover"
                 />
                 <div className="p-4 space-y-2">
-                  <h3 className="font-semibold text-base truncate">{course.title}</h3>
-                  <p className="text-sm text-gray-500">By {course.instructorName}</p>
+                  <h3 className="font-semibold text-base truncate">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    By {course.instructorName}
+                  </p>
                   <div className="flex items-center text-yellow-500 text-sm">
                     {Array.from({ length: course.rating }).map((_, i) => (
                       <span key={i}>★</span>
                     ))}
                   </div>
-                  <p className="text-lg font-bold text-gray-900">${course.price}</p>
+                  <p className="text-lg font-bold text-gray-900">
+                    ${course.price}
+                  </p>
                 </div>
               </div>
             ))}
