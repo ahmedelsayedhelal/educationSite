@@ -3,6 +3,8 @@ import { User, Layers, BookOpen } from "lucide-react";
 import StatCard from "./StateCard"
 import DashboardCharts from "./DashboardCharts"
 
+
+
 export default function DashboardHome() {
   return (
     <div className="p-8 space-y-8 bg-gray-50 min-h-screen">
@@ -11,9 +13,9 @@ export default function DashboardHome() {
 
       {/* Top Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard title="Instructors" value="60" icon={<User size={32} />} />
-        <StatCard title="Categories" value="10" icon={<Layers size={32} />} />
-        <StatCard title="Courses" value="36" icon={<BookOpen size={32} />} />
+        <StatCard title="Instructors" value="7" icon={<User size={32} />} />
+        <StatCard title="Categories" value="4" icon={<Layers size={32} />} />
+        <StatCard title="Courses" value="46" icon={<BookOpen size={32} />} />
       </div>
 
       {/* Charts Section */}

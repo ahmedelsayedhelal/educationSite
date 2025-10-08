@@ -17,7 +17,7 @@ const UseLogin = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (credentials) => {
-      const res = await fetch("http://educationtraining.runasp.net/api/Account/login", {
+      const res = await fetch("https://educationtraining.runasp.net/api/Account/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

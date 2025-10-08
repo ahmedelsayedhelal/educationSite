@@ -11,7 +11,7 @@ export default function CheckoutContainer() {
   const { data: allCourses = [] } = useQuery({
     queryKey: ["courses"],
     queryFn: async () => {
-      const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses");
+      const { data } = await axios.get("https://educationtraining.runasp.net/api/Courses");
       return data;
     },
   });

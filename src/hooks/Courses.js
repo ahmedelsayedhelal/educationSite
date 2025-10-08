@@ -14,7 +14,7 @@ export default function useCourses() {
       }
 
       try {
-        const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses", {
+        const { data } = await axios.get("https://educationtraining.runasp.net/api/Courses", {
           headers: {
                   'Authorization': `Bearer ${localStorage.getItem('token')}`
 

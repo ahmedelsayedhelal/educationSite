@@ -3,7 +3,7 @@ import React from 'react';
 import SignupForm from '../components/forms/SignupForm';
 import { useNavigate } from 'react-router-dom';
 export default function Register({
-  leftImage = 'https://img.uefa.com/imgml/TP/players/2014/2025/cutoff/63706.webp',
+  leftImage = 'https://media.istockphoto.com/id/1500285927/photo/young-woman-a-university-student-studying-online.jpg?s=612x612&w=0&k=20&c=yvFDnYMNEJ6WEDYrAaOOLXv-Jhtv6ViBRXSzJhL9S_k=',
 }) {
   const navigate = useNavigate();
   const handlesuccess = () => {

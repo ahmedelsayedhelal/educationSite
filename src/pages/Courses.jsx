@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const fetchCourses = async () => {
   const { data } = await axios.get(
-    "http://educationtraining.runasp.net/api/Courses"
+    "https://educationtraining.runasp.net/api/Courses"
   );
   return data;
 };
@@ -17,14 +17,17 @@ const Courses = () => {
     maxPrice: 1000,
   });
   const [sortBy, setSortBy] = useState("latest");
+  const [currentPage, setCurrentPage] = useState(1);
+  const coursesPerPage = 6;
 
   const { data: courses = [], isLoading } = useQuery({
     queryKey: ["courses"],
     queryFn: fetchCourses,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
+  // ✅ فلترة الكورسات
   let filteredCourses = courses.filter((course) => {
     const byRating = filters.rating ? course.rating >= filters.rating : true;
     const byCategory = filters.category
@@ -34,6 +37,7 @@ const Courses = () => {
     return byRating && byCategory && byPrice;
   });
 
+  // ✅ ترتيب الكورسات
   filteredCourses = [...filteredCourses].sort((a, b) => {
     switch (sortBy) {
       case "lowToHigh":
@@ -43,9 +47,24 @@ const Courses = () => {
       case "topRated":
         return b.rating - a.rating;
       default:
-        return b.id - a.id;
+        return b.id - a.id; // latest
     }
   });
+
+  // ✅ Pagination Logic
+  const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
+  const startIndex = (currentPage - 1) * coursesPerPage;
+  const currentCourses = filteredCourses.slice(
+    startIndex,
+    startIndex + coursesPerPage
+  );
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="flex bg-gray-50 min-h-screen p-6">
@@ -109,31 +128,73 @@ const Courses = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
-            <Link
-              key={course.id}
-              to={`/courses/${course.id}`}
-              className="bg-white border rounded-xl shadow hover:shadow-lg transition p-3"
+        {/* ✅ عرض الكورسات */}
+        {currentCourses.length === 0 ? (
+          <p className="text-center text-gray-600 mt-10">
+            No courses found matching filters.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentCourses.map((course) => (
+              <Link
+                key={course.id}
+                to={`/courses/${course.id}`}
+                className="bg-white border rounded-xl shadow hover:shadow-lg transition p-3"
+              >
+                <img
+                  src={course.image || "https://via.placeholder.com/300x200"}
+                  alt={course.title}
+                  className="w-full h-40 object-cover rounded-lg mb-3"
+                />
+                <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded">
+                  {course.categoryName}
+                </span>
+                <h2 className="font-bold text-lg mt-2">{course.title}</h2>
+                <div className="flex items-center text-yellow-500 mt-1">
+                  ⭐ {course.rating ?? 0}
+                </div>
+                <p className="text-gray-700 font-semibold mt-1">
+                  ${course.price ?? 0}
+                </p>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* ✅ Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center mt-8 space-x-2">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
             >
-              <img
-                src={course.image || "https://via.placeholder.com/300x200"}
-                alt={course.title}
-                className="w-full h-40 object-cover rounded-lg mb-3"
-              />
-              <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded">
-                {course.categoryName}
-              </span>
-              <h2 className="font-bold text-lg mt-2">{course.title}</h2>
-              <div className="flex items-center text-yellow-500 mt-1">
-                ⭐ {course.rating ?? 0}
-              </div>
-              <p className="text-gray-700 font-semibold mt-1">
-                ${course.price ?? 0}
-              </p>
-            </Link>
-          ))}
-        </div>
+              Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goToPage(i + 1)}
+                className={`px-3 py-2 rounded ${
+                  currentPage === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 hover:bg-gray-300"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );

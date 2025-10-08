@@ -36,7 +36,7 @@ const Review = () => {
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 2; // 👈 عدد الريفيوز في الصفحة
+  const pageSize = 4; // 👈 غيرت من 2 إلى 4
   const totalPages = Math.ceil(Reviews.length / pageSize);
 
   const paginatedData = Reviews.slice(

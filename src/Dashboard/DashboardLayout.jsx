@@ -3,17 +3,35 @@ import { Outlet, NavLink } from "react-router-dom";
 import DashboaedHeader from "./DashboaedHeader";
 import Footer from "../components/Home/Footer";
 import CoursesPage from "./DashboardCourses/Couses";
+import axios from "axios";
 
 export default function DashboardLayout() {
+  
+  const handleLogout = async () => {
+  try {
+    await axios.post(
+      "https://educationtraining.runasp.net/api/Account/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+  } catch {
+    console.log("مشكلة في الـ API لكن هكمل اللوج آوت");
+  } finally {
+    localStorage.removeItem("token");
+    window.location.href = "/login"; 
+  }
+};
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* 🔹 الهيدر */}
       <DashboaedHeader />
 
       <div className="flex flex-1">
-        {/* 🔹 الشريط الجانبي */}
         <aside className="w-64 bg-gray-900 text-white p-6 flex flex-col justify-between">
-          {/* 🔸 الجزء العلوي */}
           <div>
             <h2 className="text-2xl font-bold mb-8 tracking-wide text-center border-b border-gray-700 pb-3">
               Dashboard
@@ -59,20 +77,17 @@ export default function DashboardLayout() {
             </nav>
           </div>
 
-          {/* 🔸 زر تسجيل الخروج */}
-          <button className="bg-red-600 hover:bg-red-700 transition text-white py-2 px-4 rounded-lg w-full mt-8">
+          <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 transition text-white py-2 px-4 rounded-lg w-full mt-8">
             Logout
           </button>
         </aside>
 
-        {/* 🔹 المحتوى */}
         <main className="flex-1 p-8 bg-gray-50">
           <Outlet />
         </main>
 
       </div>
 
-      {/* 🔹 الفوتر */}
       <Footer />
 
 

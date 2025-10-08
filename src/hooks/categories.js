@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 const fetchCategories = async () => {
-    const res = await axios.get('http://educationtraining.runasp.net/api/Categories')
+    const res = await axios.get('https://educationtraining.runasp.net/api/Categories')
     return res.data
 }
 const Categories = () => {

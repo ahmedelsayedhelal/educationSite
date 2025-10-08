@@ -6,7 +6,7 @@ import DeleteCourseModal from "./Api/deletecourse";
 import ViewCourseModal from "./Api/viewcourse";
 import CourseModal from "./Api/Addcourse";
 const fetchCourses = async () => {
-  const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses");
+  const { data } = await axios.get("https://educationtraining.runasp.net/api/Courses");
   return data;
 };
 

@@ -12,22 +12,18 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      // 1. إعمل call لـ API اللوج اوت
-      await axios.post("/api/Account/logout", {}, {
+      await axios.post("https://educationtraining.runasp.net/api/Account/logout", {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       });
     } catch  {
-      console.log("⚠️ مشكلة في الـ API لكن هكمل اللوج اوت");
+      console.log(" مشكلة في الـ API لكن هكمل اللوج اوت");
     } finally {
-      // 2. امسح التوكن من الـ localStorage
       localStorage.removeItem("token");
       
-      // 3. إعمل refetch للـ user data علشان الـ UI يتبدل
       refetch();
       
-      // 4. إعمل redirect لصفحة اللوجين
       window.location.href = "/login";
     }
   };
@@ -36,9 +32,9 @@ const Header = () => {
     <header className="w-full bg-white shadow-sm">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+       <Link to="/"><div className="flex items-center gap-2">
           <span className="font-bold text-xl text-gray-800">Byway</span>
-        </div>
+        </div></Link>
 
         {/* Search */}
         <div className="flex-1 max-w-lg mx-6">

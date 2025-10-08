@@ -112,11 +112,11 @@ export default function CourseModal({ mode = "add", isOpen, onClose, course, onS
       
       // 🔹 استخدم الـ API_BASE في كل الـ requests
       if (mode === "add") {
-        response = await axios.post(`http://educationtraining.runasp.net/api/Courses`, payload);
+        response = await axios.post(`https://educationtraining.runasp.net/api/Courses`, payload);
       } else if (mode === "update") {
         if (!course?.id) throw new Error("Course ID not found");
         // 🔥 الـ ID بيتم إرساله في الـ URL مش في الـ body
-        response = await axios.put(`http://educationtraining.runasp.net/api/Courses/${course.id}`, payload);
+        response = await axios.put(`https://educationtraining.runasp.net/api/Courses/${course.id}`, payload);
       }
 
       console.log(" Course saved:", response.data);

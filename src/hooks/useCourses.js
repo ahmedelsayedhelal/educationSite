@@ -5,7 +5,7 @@ const fetchCourses = async ({ queryKey }) => {
   const [_key, filters] = queryKey;
   const { rating, lectures, category, minPrice, maxPrice } = filters;
 
-  const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses", {
+  const { data } = await axios.get("https://educationtraining.runasp.net/api/Courses", {
     params: {
       rating,
       lectures,
