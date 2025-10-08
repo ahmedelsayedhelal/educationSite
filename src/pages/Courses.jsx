@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const fetchCourses = async () => {
   const { data } = await axios.get(
-    "/api/Courses"
+    "http://educationtraining.runasp.net/api/Courses"
   );
   return data;
 };

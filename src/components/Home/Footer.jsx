@@ -43,16 +43,16 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
             <div className="text-gray-300 space-y-2 text-sm">
-              <p>Address: 123 Main Street, Anytown, CA 12345</p>
-              <p>Tel: +(123) 456-7890</p>
-              <p>Mail: bywayedu@webkud.in</p>
+              <p>Address: Cairo</p>
+              <p>Tel: 01005006382</p>
+              <p>Mail: ahmedhelal225194@gmail.com</p>
             </div>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Byway. All rights reserved.</p>
+          <p>&copy; 2025 Byway. All rights reserved.</p>
         </div>
       </div>
     </footer>

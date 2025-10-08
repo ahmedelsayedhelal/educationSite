@@ -5,7 +5,7 @@ const useRegister = () => {
   return useMutation({
     mutationFn: async (userData) => {
       const { data } = await axios.post(
-        "/api/Account/register",
+        "http://educationtraining.runasp.net/api/Account/register",
         userData,
         {
           headers: { "Content-Type": "application/json" },

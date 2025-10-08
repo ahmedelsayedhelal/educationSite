@@ -8,7 +8,7 @@ export const useCurrentUser = () => {
       const token = localStorage.getItem("token");
       if (!token) return null;
 
-      const { data } = await axios.get("/api/Account/current-user", {
+      const { data } = await axios.get("http://educationtraining.runasp.net/api/Account/current-user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

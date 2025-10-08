@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 export default function CheckoutContainer() {
   const cartItems = useSelector((state) => state.cart.items);
 
-  // جلب الكورسات من الـ API
   const { data: allCourses = [] } = useQuery({
     queryKey: ["courses"],
     queryFn: async () => {
@@ -17,12 +16,10 @@ export default function CheckoutContainer() {
     },
   });
 
-  // فلترة الكورسات اللي في الكارت
   const coursesInCart = useMemo(() => {
     return allCourses.filter((course) => cartItems[course.id]);
   }, [allCourses, cartItems]);
 
-  // الحسابات
   const subtotal = coursesInCart.reduce(
     (sum, course) => sum + (course.price || 0) * (cartItems[course.id] || 1),
     0
@@ -33,7 +30,6 @@ export default function CheckoutContainer() {
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
         <div className="mb-6 text-sm text-gray-500">
           <nav className="flex items-center gap-2">
             <span className="hover:text-gray-700 cursor-default">Details</span>
@@ -49,9 +45,7 @@ export default function CheckoutContainer() {
         </h1>
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* ✅ Left: Billing + Payment */}
           <section className="lg:col-span-2 space-y-6">
-            {/* Country / State */}
             <div className="rounded-xl border border-gray-200 p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
@@ -77,14 +71,12 @@ export default function CheckoutContainer() {
               </div>
             </div>
 
-            {/* Payment Method */}
             <div className="rounded-xl border border-gray-200">
               <div className="p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
                   Payment Method
                 </h2>
 
-                {/* Credit / Debit */}
                 <div className="rounded-lg border border-gray-200 bg-gray-50">
                   <div className="flex items-center justify-between px-5 py-4">
                     <label className="flex items-center gap-3">
@@ -149,7 +141,6 @@ export default function CheckoutContainer() {
                   </div>
                 </div>
 
-                {/* PayPal */}
                 <div className="mt-4 rounded-lg border border-gray-200">
                   <label className="flex items-center justify-between px-5 py-4">
                     <span className="flex items-center gap-3">
@@ -169,7 +160,6 @@ export default function CheckoutContainer() {
             </div>
           </section>
 
-          {/* ✅ Right: Dynamic Order Summary */}
           <aside className="lg:col-span-1">
             <div className="rounded-xl border border-gray-200 p-6">
               <h2 className="text-xl font-semibold text-gray-900">
@@ -228,14 +218,14 @@ export default function CheckoutContainer() {
                   </dd>
                 </div>
               </dl>
-              <Link to ="/purchase-complete">
-              <button
-                type="button"
-                disabled={coursesInCart.length === 0}
-                className="mt-6 w-full rounded-lg bg-gray-900 px-4 py-3 text-white transition disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                Confirm Order
-              </button>
+              <Link to="/purchase-complete">
+                <button
+                  type="button"
+                  disabled={coursesInCart.length === 0}
+                  className="mt-6 w-full rounded-lg bg-gray-900 px-4 py-3 text-white transition disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Confirm Order
+                </button>
               </Link>
             </div>
           </aside>

@@ -13,18 +13,15 @@ export default function Login({
             Sign in to your account
           </h1>
 
-          <LoginForm/>{/* ✅ الفورم منفصل */}
+          <LoginForm />
 
-          {/* Divider */}
           <div className="mx-1 my-8 flex max-w-2xl items-center gap-4 text-sm font-semibold text-slate-500">
             <span className="h-px flex-1 bg-slate-200" />
             <p className="whitespace-nowrap">Sign in with</p>
             <span className="h-px flex-1 bg-slate-200" />
           </div>
 
-          {/* Social login buttons */}
           <div className="grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
-            {/* Facebook */}
             <button
               type="button"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 transition hover:bg-slate-50"
@@ -33,7 +30,6 @@ export default function Login({
               Facebook
             </button>
 
-            {/* Google */}
             <button
               type="button"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 transition hover:bg-slate-50"
@@ -47,7 +43,6 @@ export default function Login({
               Google
             </button>
 
-            {/* Microsoft */}
             <button
               type="button"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 transition hover:bg-slate-50"

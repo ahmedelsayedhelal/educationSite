@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { clearCart } from "../store/Cart/Cart.js"; // عدّل المسار حسب مكان السلايس عندك
+import { clearCart } from "../store/Cart/Cart.js";
 
 export default function PurchaseComplete() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(clearCart());
-    localStorage.removeItem("addedCourses");// 🧹 يمسح الكارت أول ما الصفحة تفتح
+    localStorage.removeItem("addedCourses");
   }, [dispatch]);
 
   return (

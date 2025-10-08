@@ -8,7 +8,7 @@ export default function DeleteCourseModal({ isOpen, onClose, course }) {
 
   const deleteCourse = useMutation({
     mutationFn: async () =>
-      await axios.delete(`/api/Courses/${course.id}`),
+      await axios.delete(`http://educationtraining.runasp.net/api/Courses/${course.id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["courses"]);
       onClose();

@@ -1,7 +1,7 @@
 // src/Dashboard/DashboardInstructors/api.js
 import axios from "axios";
 
-const BASE_URL = "/api/Instructor";
+const BASE_URL = "http://educationtraining.runasp.net/api/Instructor";
 
 export const getInstructors = async () => {
   const res = await axios.get(BASE_URL);

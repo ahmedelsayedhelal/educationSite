@@ -18,7 +18,6 @@ const Cartslice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.items));
     },
 
-    // 🧨 remove one item completely
     removeFromCart(state, action) {
       const id = action.payload;
       if (state.items[id]) {
@@ -27,7 +26,6 @@ const Cartslice = createSlice({
       }
     },
 
-    // 🧹 clear all cart (used after purchase complete)
     clearCart(state) {
       state.items = {};
       localStorage.removeItem("cartItems");

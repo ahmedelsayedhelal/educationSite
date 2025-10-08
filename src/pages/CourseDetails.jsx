@@ -19,12 +19,12 @@ import {
 } from "react-icons/fa";
 
 const fetchCourseById = async (id) => {
-  const { data } = await axios.get(`/api/Courses/${id}`);
+  const { data } = await axios.get(`http://educationtraining.runasp.net/api/Courses/${id}`);
   return data;
 };
 
 const fetchAllCourses = async () => {
-  const { data } = await axios.get("/api/Courses");
+  const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses");
   return data;
 };
 

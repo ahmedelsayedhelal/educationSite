@@ -4,9 +4,8 @@ import SignupForm from '../components/forms/SignupForm';
 import { useNavigate } from 'react-router-dom';
 export default function Register({
   leftImage = 'https://img.uefa.com/imgml/TP/players/2014/2025/cutoff/63706.webp',
-})
-
- { const navigate = useNavigate();
+}) {
+  const navigate = useNavigate();
   const handlesuccess = () => {
     navigate('/Login');
   }
@@ -31,10 +30,8 @@ export default function Register({
             Create Your Account
           </h1>
 
-          {/* هنا حطينا الكمبوننت الجديد */}
           <SignupForm onsuccess={handlesuccess} />
 
-          {/* باقي الجزء بتاع Social Buttons */}
           <div className="mx-1 my-7 flex items-center gap-4 text-sm font-semibold text-slate-500">
             <span className="h-px flex-1 bg-slate-200" />
             <p className="whitespace-nowrap">Sign up with</p>

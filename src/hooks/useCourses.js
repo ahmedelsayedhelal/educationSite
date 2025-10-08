@@ -5,7 +5,7 @@ const fetchCourses = async ({ queryKey }) => {
   const [_key, filters] = queryKey;
   const { rating, lectures, category, minPrice, maxPrice } = filters;
 
-  const { data } = await axios.get("/api/Courses", {
+  const { data } = await axios.get("http://educationtraining.runasp.net/api/Courses", {
     params: {
       rating,
       lectures,
@@ -20,8 +20,8 @@ const fetchCourses = async ({ queryKey }) => {
 
 export const useCourses = (filters) => {
   return useQuery({
-    queryKey: ["courses", filters], // لو الفلاتر اتغيرت → refetch تلقائي
+    queryKey: ["courses", filters], 
     queryFn: fetchCourses,
-    keepPreviousData: true, // يخلي الكورسات القديمة لحد ما الجديدة تيجي
+    keepPreviousData: true, 
   });
 };
