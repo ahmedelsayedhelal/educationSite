@@ -2,15 +2,15 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
 const stats = [
-  { number: 250, label: "Top Instructors" },
-  { number: 1000, label: "Courses" },
-  { number: 15, label: "Categories" },
+  { number: 10, label: "Top Instructors" },
+  { number: 100, label: "Courses" },
+  { number: 4, label: "Categories" },
   { number: 2400, label: "Students" },
 ];
 
 export default function State() {
   return (
-    <section className="bg-gray-50 py-16 mt-0">
+    <section className="bg-white-50 py-16 mt-0">
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         {stats.map((stat, i) => (
           <StatCard key={i} number={stat.number} label={stat.label} />

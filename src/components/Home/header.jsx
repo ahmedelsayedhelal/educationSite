@@ -18,7 +18,7 @@ const Header = () => {
         }
       });
     } catch  {
-      console.log(" مشكلة في الـ API لكن هكمل اللوج اوت");
+      console.log("");
     } finally {
       localStorage.removeItem("token");
       

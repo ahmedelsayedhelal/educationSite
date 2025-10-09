@@ -27,7 +27,6 @@ const Courses = () => {
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
-  // ✅ فلترة الكورسات
   let filteredCourses = courses.filter((course) => {
     const byRating = filters.rating ? course.rating >= filters.rating : true;
     const byCategory = filters.category
@@ -37,7 +36,6 @@ const Courses = () => {
     return byRating && byCategory && byPrice;
   });
 
-  // ✅ ترتيب الكورسات
   filteredCourses = [...filteredCourses].sort((a, b) => {
     switch (sortBy) {
       case "lowToHigh":
@@ -47,11 +45,10 @@ const Courses = () => {
       case "topRated":
         return b.rating - a.rating;
       default:
-        return b.id - a.id; // latest
+        return b.id - a.id; 
     }
   });
 
-  // ✅ Pagination Logic
   const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
   const startIndex = (currentPage - 1) * coursesPerPage;
   const currentCourses = filteredCourses.slice(
@@ -128,7 +125,6 @@ const Courses = () => {
           </select>
         </div>
 
-        {/* ✅ عرض الكورسات */}
         {currentCourses.length === 0 ? (
           <p className="text-center text-gray-600 mt-10">
             No courses found matching filters.

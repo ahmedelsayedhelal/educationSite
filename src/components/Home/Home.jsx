@@ -137,7 +137,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
-               <Link to ="/courses">
+               <Link to ="/login">
               <motion.button
                 whileHover={{ 
                   scale: 1.05,

@@ -35,7 +35,6 @@ const CourseDetails = () => {
   const [activeTab, setActiveTab] = useState("description");
   const dispatch = useDispatch();
 
-  // 🛒 احنا بنجيب cartItems من Redux
   const cartItems = useSelector((state) => state.cart.items);
   const isAddedToCart = !!cartItems[id];
 
@@ -122,7 +121,6 @@ const CourseDetails = () => {
             </span>
           </p>
 
-          {/* Tabs */}
           <div className="border-b mb-4">
             {["description", "instructor", "reviews"].map((tab) => (
               <button
@@ -174,15 +172,92 @@ const CourseDetails = () => {
             )}
 
             {activeTab === "reviews" && (
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Learner Reviews</h2>
-                <p>No reviews yet.</p>
+              <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-6">Learner Reviews</h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {/* يسار: التقييم العام */}
+                  <div className="space-y-3">
+                    <div className="flex items-center">
+                      <FaStar className="text-yellow-500 text-2xl" />
+                      <span className="text-3xl font-bold ml-2">4.6</span>
+                      <span className="text-gray-500 ml-2">
+                        146,951 reviews
+                      </span>
+                    </div>
+
+                    <div className="space-y-1 text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-yellow-500">
+                          <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+                        </div>
+                        <span>80%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-yellow-500">
+                          <FaStar /><FaStar /><FaStar /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" />
+                        </div>
+                        <span>10%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-yellow-500">
+                          <FaStar /><FaStar /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" />
+                        </div>
+                        <span>5%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-yellow-500">
+                          <FaStar /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" />
+                        </div>
+                        <span>3%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-yellow-500">
+                          <FaStar className="text-yellow-500" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" /><FaStar className="text-gray-300" />
+                        </div>
+                        <span>2%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-2 space-y-4">
+                    {[1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className="border rounded-lg p-4 flex gap-4 bg-white"
+                      >
+                        <img
+                          src={InstructorImg}
+                          alt="Reviewer"
+                          className="w-14 h-14 rounded-full object-cover"
+                        />
+                        <div>
+                          <p className="font-semibold">Mark Doe</p>
+                          <div className="flex items-center text-yellow-500 text-sm">
+                            <FaStar className="text-yellow-500 mr-1" />
+                            <span className="text-black font-semibold">5</span>
+                            <span className="text-gray-500 ml-2 text-sm">
+                              Reviewed on 22nd March, 2024
+                            </span>
+                          </div>
+                          <p className="text-gray-700 mt-1">
+                            I was initially apprehensive, having no prior design
+                            experience. But the instructor, John Doe, did an
+                            amazing job of breaking down complex concepts into
+                            easily digestible modules. The video lectures were
+                            engaging, and the real-world examples really helped
+                            solidify my understanding.
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* Right Sidebar */}
         <div className="w-full lg:w-80 flex-shrink-0 border p-4 rounded-lg shadow-md self-start">
           <img
             src={data.image}
@@ -223,7 +298,6 @@ const CourseDetails = () => {
         </div>
       </div>
 
-      {/* More Courses Section */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-6">More Courses Like This</h2>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -235,11 +309,13 @@ const CourseDetails = () => {
                 key={course.id}
                 className="border rounded-lg shadow-sm overflow-hidden hover:shadow-md transition bg-white"
               >
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="w-full h-32 object-cover"
-                />
+                <Link to={`/courses/${course.id}`}>
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-32 object-cover"
+                  />
+                </Link>
                 <div className="p-4 space-y-2">
                   <h3 className="font-semibold text-base truncate">
                     {course.title}

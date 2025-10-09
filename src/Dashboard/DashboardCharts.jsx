@@ -67,7 +67,6 @@ export default function DashboardCharts() {
         </ResponsiveContainer>
       </div>
 
-      {/* Statistics Pie Chart */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Statistics</h2>
         <ResponsiveContainer width="100%" height={200}>
