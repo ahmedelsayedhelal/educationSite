@@ -7,8 +7,8 @@ import InstructorDeleteModal from "./InstructorDeleteModal";
 const Instructor = () => {
   const [instructors, setInstructors] = useState([]);
   const [selectedInstructor, setSelectedInstructor] = useState(null);
-  const [modalType, setModalType] = useState(null); // "add" | "edit" | "view" | "delete"
-  
+  const [modalType, setModalType] = useState(null);
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -35,53 +35,40 @@ const Instructor = () => {
     fetchData();
   };
 
-  // Pagination calculations
+  // Pagination
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentInstructors = instructors.slice(startIndex, endIndex);
 
-  // Page change handlers
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
+  const goToPage = (page) => setCurrentPage(page);
+  const nextPage = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const prevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  // Items per page change handler
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1); // Reset to first page
+    setCurrentPage(1);
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Instructors</h2>
+    <div className="p-4 sm:p-6 bg-gray-50 min-h-screen">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Instructors</h2>
         <button
           onClick={() => openModal("add")}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
         >
           Add Instructor
         </button>
       </div>
 
-      {/* Items per page selector */}
-      <div className="flex justify-between items-center mb-4">
+      {/* Items per page + Info */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600">Show:</label>
-          <select 
-            value={itemsPerPage} 
+          <select
+            value={itemsPerPage}
             onChange={handleItemsPerPageChange}
             className="border rounded px-2 py-1 text-sm"
           >
@@ -92,82 +79,87 @@ const Instructor = () => {
           </select>
           <span className="text-sm text-gray-600">entries</span>
         </div>
-        
+
         <div className="text-sm text-gray-600">
           Showing {startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} entries
         </div>
       </div>
 
-      <table className="w-full border rounded-lg shadow-md">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-3 text-left">Name</th>
-            <th className="p-3 text-left">Job Title</th>
-            <th className="p-3 text-left">Email</th>
-            <th className="p-3 text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentInstructors.map((ins) => (
-            <tr key={ins.id} className="border-t hover:bg-gray-50">
-              <td className="p-3">{ins.name}</td>
-              <td className="p-3">{ins.jobTitle}</td>
-              <td className="p-3">{ins.email}</td>
-              <td className="p-3 flex gap-2">
-                <button
-                  onClick={() => openModal("view", ins)}
-                  className="text-blue-500 hover:text-blue-700 transition"
-                  title="View"
-                >
-                  👁️
-                </button>
-                <button
-                  onClick={() => openModal("edit", ins)}
-                  className="text-green-600 hover:text-green-800 transition"
-                  title="Edit"
-                >
-                  ✏️
-                </button>
-                <button
-                  onClick={() => openModal("delete", ins)}
-                  className="text-red-600 hover:text-red-800 transition"
-                  title="Delete"
-                >
-                  🗑️
-                </button>
-              </td>
+      {/* Table (Responsive scrollable) */}
+      <div className="overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200">
+        <table className="min-w-full text-sm text-left">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 font-semibold text-gray-700">Name</th>
+              <th className="p-3 font-semibold text-gray-700">Job Title</th>
+              <th className="p-3 font-semibold text-gray-700">Email</th>
+              <th className="p-3 font-semibold text-gray-700">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentInstructors.map((ins) => (
+              <tr key={ins.id} className="border-t hover:bg-gray-50 transition">
+                <td className="p-3">{ins.name}</td>
+                <td className="p-3">{ins.jobTitle}</td>
+                <td className="p-3">{ins.email}</td>
+                <td className="p-3 flex gap-2">
+                  <button
+                    onClick={() => openModal("view", ins)}
+                    className="text-blue-500 hover:text-blue-700 transition"
+                    title="View"
+                  >
+                    👁️
+                  </button>
+                  <button
+                    onClick={() => openModal("edit", ins)}
+                    className="text-green-600 hover:text-green-800 transition"
+                    title="Edit"
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    onClick={() => openModal("delete", ins)}
+                    className="text-red-600 hover:text-red-800 transition"
+                    title="Delete"
+                  >
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {/* Pagination Controls */}
+        {instructors.length === 0 && (
+          <div className="text-center py-8 text-gray-500">No instructors found</div>
+        )}
+      </div>
+
+      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-between items-center mt-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3">
           <div className="text-sm text-gray-600">
             Page {currentPage} of {totalPages}
           </div>
-          
-          <div className="flex gap-2">
-            {/* Previous Button */}
+
+          <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className={`px-3 py-1 rounded border ${
-                currentPage === 1 
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed" 
+              className={`px-3 py-1 rounded border text-sm ${
+                currentPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
               Previous
             </button>
 
-            {/* Page Numbers */}
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <button
                 key={page}
                 onClick={() => goToPage(page)}
-                className={`px-3 py-1 rounded border ${
+                className={`px-3 py-1 rounded border text-sm ${
                   currentPage === page
                     ? "bg-blue-600 text-white"
                     : "bg-white text-gray-700 hover:bg-gray-50"
@@ -177,11 +169,10 @@ const Instructor = () => {
               </button>
             ))}
 
-            {/* Next Button */}
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className={`px-3 py-1 rounded border ${
+              className={`px-3 py-1 rounded border text-sm ${
                 currentPage === totalPages
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50"
@@ -193,26 +184,17 @@ const Instructor = () => {
         </div>
       )}
 
-      {/* Empty State */}
-      {instructors.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          No instructors found
-        </div>
-      )}
-
       {/* Modals */}
-      {modalType === "add" || modalType === "edit" ? (
+      {["add", "edit"].includes(modalType) && (
         <InstructorModal
           type={modalType}
           instructor={selectedInstructor}
           onClose={closeModal}
         />
-      ) : null}
-
+      )}
       {modalType === "view" && (
         <InstructorViewModal instructor={selectedInstructor} onClose={closeModal} />
       )}
-
       {modalType === "delete" && (
         <InstructorDeleteModal instructor={selectedInstructor} onClose={closeModal} />
       )}
