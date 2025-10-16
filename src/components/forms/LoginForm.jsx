@@ -38,18 +38,16 @@ export default function SigninForm() {
   const { mutate, isPending, isError, error, isSuccess } = UseLogin();
 
   const onSubmit = (values) => {
-    console.log("📦 Login Form Values:", values);
 
     mutate(values, {
-      onSuccess: (data) => {
-        console.log("✅ Logged in successfully:", data);
+      onSuccess: () => {
 
         const userRole = localStorage.getItem("userRole");
         const redirectPath = getRedirectPathByRole(userRole);
    
 
         reset();
-        navigate(redirectPath); // ✅ توجيه للصفحة المناسبة حسب الـ role
+        navigate(redirectPath); 
       },
       onError: (err) => {
         console.error("❌ Login failed:", err.message);
@@ -59,7 +57,6 @@ export default function SigninForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log("✅ Login success effect triggered. Checking role...");
       
       setTimeout(() => {
         const userRole = localStorage.getItem("userRole");

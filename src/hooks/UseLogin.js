@@ -43,19 +43,16 @@ const UseLogin = () => {
           localStorage.setItem("userEmail", decodedToken.email);
           localStorage.setItem("username", decodedToken.sub);
 
-          console.log(" User Role:", decodedToken.role);
-          console.log("User Email:", decodedToken.email);
+        
         }
 
         queryClient.invalidateQueries(["currentUser"]);
-        console.log(" Token saved:", data.token);
       }
 
       return data;
     },
 
-    onSuccess: (data) => {
-      console.log(" Logged in successfully:", data);
+    onSuccess: () => {
     },
 
     onError: (error) => {
