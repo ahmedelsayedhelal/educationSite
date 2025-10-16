@@ -43,7 +43,7 @@ const UseLogin = () => {
           localStorage.setItem("userEmail", decodedToken.email);
           localStorage.setItem("username", decodedToken.sub);
 
-        
+
         }
 
         queryClient.invalidateQueries(["currentUser"]);

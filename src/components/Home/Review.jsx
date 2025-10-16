@@ -6,25 +6,25 @@ const Review = () => {
     {
       id: 1,
       text: "Byway's tech courses are top-notch! As someone who's always looking to stay ahead in the rapidly evolving tech world, I appreciate the up-to-date content and engaging multimedia.",
-      name: "Jane Doe",
+      name: "Mazen shera",
       position: "Designer"
     },
     {
       id: 2,
       text: "Byway's tech courses are top-notch! As someone who's always looking to stay ahead in the rapidly evolving tech world, I appreciate the up-to-date content and engaging multimedia.",
-      name: "Jane Doe", 
+      name: "Shehap reda", 
       position: "Designer"
     },
     {
       id: 3,
       text: "Byway's tech courses are top-notch! As someone who's always looking to stay ahead in the rapidly evolving tech world, I appreciate the up-to-date content and engaging multimedia.",
-      name: "Jane Doe", 
+      name: "Ahmed Hany", 
       position: "Designer"
     },
     {
       id: 4,
       text: "Byway's tech courses are top-notch! As someone who's always looking to stay ahead in the rapidly evolving tech world, I appreciate the up-to-date content and engaging multimedia.",
-      name: "Jane Doe", 
+      name: "Ahmed Helal", 
       position: "Designer"
     },
     {
@@ -36,7 +36,7 @@ const Review = () => {
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4; // 👈 غيرت من 2 إلى 4
+  const pageSize = 4; 
   const totalPages = Math.ceil(Reviews.length / pageSize);
 
   const paginatedData = Reviews.slice(
@@ -47,7 +47,6 @@ const Review = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-6">
-        {/* العنوان + الأسهم */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">What Our Students Say</h2>
 
@@ -69,7 +68,6 @@ const Review = () => {
           </div>
         </div>
 
-        {/* الكروت */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {paginatedData.map((e) => (
             <div key={e.id} className="bg-white p-8 rounded-lg shadow-md">
