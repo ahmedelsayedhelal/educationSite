@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useRegister from "../../hooks/UseRegister";
 import { useNavigate } from "react-router-dom";
 
-// ✅ Validation Schema
 const schema = z
   .object({
     firstname: z.string().min(1, "First name is required"),
@@ -61,7 +60,6 @@ export default function SignupForm() {
     });
   };
 
-  // ✅ تأمين عرض الخطأ كنص فقط
   const errorMessage =
     error?.response?.data?.title ||
     error?.response?.data?.message ||

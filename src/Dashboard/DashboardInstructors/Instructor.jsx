@@ -146,11 +146,10 @@ const Instructor = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className={`px-3 py-1 rounded border text-sm ${
-                currentPage === 1
+              className={`px-3 py-1 rounded border text-sm ${currentPage === 1
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50"
-              }`}
+                }`}
             >
               Previous
             </button>
@@ -159,11 +158,10 @@ const Instructor = () => {
               <button
                 key={page}
                 onClick={() => goToPage(page)}
-                className={`px-3 py-1 rounded border text-sm ${
-                  currentPage === page
+                className={`px-3 py-1 rounded border text-sm ${currentPage === page
                     ? "bg-blue-600 text-white"
                     : "bg-white text-gray-700 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 {page}
               </button>
@@ -172,11 +170,10 @@ const Instructor = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className={`px-3 py-1 rounded border text-sm ${
-                currentPage === totalPages
+              className={`px-3 py-1 rounded border text-sm ${currentPage === totalPages
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50"
-              }`}
+                }`}
             >
               Next
             </button>
