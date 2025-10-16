@@ -45,7 +45,7 @@ const Review = () => {
   );
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-white-50">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">What Our Students Say</h2>
